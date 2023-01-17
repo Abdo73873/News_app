@@ -51,10 +51,8 @@ void getBusiness(){
     },
   ).then((value) {
     business=value.data["articles"];
-    print(business[0]["title"]);
     emit(NewsGetBusinessSuccessState());
   }).catchError((er){
-    print(er.toString());
     emit(NewsGetBusinessErrorState(er.toString()));
 
   });

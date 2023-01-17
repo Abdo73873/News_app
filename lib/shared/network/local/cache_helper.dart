@@ -19,17 +19,6 @@ class CacheHelper{
     return sharedPreferences.getBool(key);
  }
 
-  static Future<bool> setHistoryData({
-    required String key,
-    required String value,
-  })async {
-    return await sharedPreferences.setString(key, value);
-  }
 
- static String? getHistoryData({
-    required String key,
-  }){
-    return sharedPreferences.getString(key);
-  }
 
 }

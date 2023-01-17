@@ -32,7 +32,6 @@ class SearchScreen extends StatelessWidget {
                     labelText: 'Search',
                     prefix: Icons.search,
                     onChange: (value){
-                      CacheHelper.setHistoryData(key: 'search', value: value);
                       NewsCubit.get(context).getSearch(value);
                     }
                 ),
