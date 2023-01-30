@@ -12,7 +12,7 @@ class BusinessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewsCubit,NewsStates>(
-      listener:(context,state)=>NewsCubit() ,
+      listener:(context,state){} ,
       builder: (context,state){
          List<dynamic> list =NewsCubit.get(context).business;
         return  articleBuilder(list);

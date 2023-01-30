@@ -33,19 +33,26 @@ List<BottomNavigationBarItem> bottomItems =[
     label: 'Science',
   ),
 ];
+List<String> title=[
+  'Business',
+  'Sports',
+  'Science',
 
+];
 void changeBottomNavigationBar(int index){
 currentIndex=index;
 emit(NewsBottomNavState());
 }
 String apiKey='498af28f8af946e6b204c6c806e8cfcb';
+String country='eg';
+
   List<dynamic> business=[];
 void getBusiness(){
   emit(NewsGetBusinessLoadingState());
   DioHelper.getData(
     urlPath:"v2/top-headlines" ,
     query: {
-      'country':'eg',
+      'country':country,
       'category':'business',
       'apiKey':apiKey,
     },
@@ -65,7 +72,7 @@ void getSports(){
   DioHelper.getData(
       urlPath: 'v2/top-headlines',
       query:  {
-        'country':'eg',
+        'country':country,
         'category':'sports',
         'apiKey':apiKey,
       },
@@ -82,7 +89,7 @@ void getScience(){
   DioHelper.getData(
     urlPath: 'v2/top-headlines',
     query:  {
-      'country':'eg',
+      'country':country,
       'category':'science',
       'apiKey':apiKey,
     },
@@ -109,7 +116,6 @@ void getSearch(String value){
 
 }
 
-
   bool isDark=false;
   void changeMode({
    bool? fromCache,
@@ -134,5 +140,28 @@ void getSearch(String value){
 
   }
 
+  void changeCountry(String country){{
+    if(this.country!=country){
+      this.country=country;
+      if(currentIndex==0){
+        getBusiness();
+        getSports();
+        getScience();
+      }
+      if(currentIndex==1){
+        getSports();
+        getBusiness();
+        getScience();
+      }
+      if(currentIndex==2){
+        getScience();
+        getSports();
+        getBusiness();
+      }
+
+
+
+    }
+  }}
 
 }

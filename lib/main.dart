@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget
     return BlocProvider(
       create: (BuildContext context)=>NewsCubit()..getBusiness()..getSports()..getScience()..changeMode(fromCache:isDark),
       child: BlocConsumer<NewsCubit,NewsStates>(
-        listener:(context,state)=>NewsCubit() ,
+        listener:(context,state){},
         builder: (context,state){
 
           return  MaterialApp(
@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget
               scaffoldBackgroundColor: Colors.white,
               appBarTheme: AppBarTheme(
                 titleSpacing: 20.0,
-                backwardsCompatibility: false,
                 systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarColor: Colors.white,
                   statusBarIconBrightness: Brightness.dark,

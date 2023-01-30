@@ -1,10 +1,10 @@
-
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_types_as_parameter_names, non_constant_identifier_names
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart';
 import '../../modules/web_view/web_view_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 Widget defaultFromField({
   required BuildContext context,
@@ -17,143 +17,128 @@ Widget defaultFromField({
   IconData? prefix,
   IconData? suffix,
   Function()? suffixOnPressed,
-  bool isPassword=false,
-})=> TextFormField(
-  controller: controller,
-  keyboardType: keyboardType,
-  onFieldSubmitted: (v){
-    onSubmit!(v);
-  },
-  onChanged: onChange,
-  validator:validator ,
-  obscureText: isPassword,
-  decoration: InputDecoration(
-    labelText: labelText,
-    labelStyle: Theme.of(context).textTheme.labelMedium,
-    border: OutlineInputBorder(),
-    prefixIcon: prefix!=null?Icon(
-        prefix,
-      color: Theme.of(context).iconTheme.color,
-    ):null,
-    suffixIcon:suffix!=null?IconButton(
-      icon: Icon(
-        suffix
+  bool isPassword = false,
+}) =>
+    TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      onFieldSubmitted: (v) {
+        onSubmit!(v);
+      },
+      onChanged: onChange,
+      validator: validator,
+      obscureText: isPassword,
+      decoration: InputDecoration(
+        labelText: labelText,
+        labelStyle: Theme.of(context).textTheme.labelMedium,
+        border: OutlineInputBorder(),
+        prefixIcon: prefix != null
+            ? Icon(
+                prefix,
+                color: Theme.of(context).iconTheme.color,
+              )
+            : null,
+        suffixIcon: suffix != null
+            ? IconButton(
+                icon: Icon(suffix),
+                onPressed: suffixOnPressed,
+              )
+            : null,
       ),
-      onPressed: suffixOnPressed,
+      style: TextStyle(
+        color: Theme.of(context).iconTheme.color,
+      ),
+      textDirection: TextDirection.ltr,
+    );
 
-    ):null,
-  ),
-  style:TextStyle(
-      color:Theme.of(context).iconTheme.color,
-  ),
-  textDirection:TextDirection.ltr,
-);
+Widget buildArticleItem(article, context) => InkWell(
 
-Widget buildArticleItem(article,context)=>InkWell(
-  onTap: (){
-   navigateTo(context, WebViewScreen(article['url']));
-  },
-  child:   Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Row(
-      children: [
-        Container(
-          width: 120.0,
-          height: 100.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0,),
-            image: DecorationImage(
-
-              image: NetworkImage('${(article["urlToImage"])??'https://t3.ftcdn.net/jpg/02/44/17/82/360_F_244178265_NP4S8WdlZRGYVSkVkxhtiDonSfQPAbyO.jpg' }'),
-
-              fit: BoxFit.cover,
-
+      onTap: () {
+        navigateTo(context, WebViewScreen(article['url']));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            Container(
+                width: 120.0,
+                height: 100.0,
+                child: article['urlToImage'] != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: CachedNetworkImage(
+                          placeholder: (context, url) => Image.asset(
+                            'assets/images/loadingOrange.gif',
+                          ),
+                          imageUrl: '${article["urlToImage"]}',
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) => Image.asset(
+                            'assets/images/notAvailable.jpg',
+                          ),
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Image.asset('assets/images/notAvailable.jpg'),
+                      )),
+            SizedBox(
+              width: 20.0,
             ),
-
-          ),
-
-        ),
-
-        SizedBox(width: 20.0,),
-
-        Expanded(
-
-          child: SizedBox(
-
-            height: 120,
-
-            child: Column(
-
-              crossAxisAlignment: CrossAxisAlignment.start,
-
-              children: [
-
-                Expanded(
-
-                  child: Text('${article['title']}',
-
-                    style: Theme.of(context).textTheme.bodyText1,
-
-                    maxLines: 3,
-
-                    overflow: TextOverflow.ellipsis,
-
-                  ),
-
+            Expanded(
+              child: SizedBox(
+                height: 120,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${article['title']}',
+                        style: Theme.of(context).textTheme.bodyText1,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Text(
+                      '${article['publishedAt'].substring(0, 10)}  ${article['publishedAt'].substring(11, 16)}',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
-
-                Text(
-
-                  '${article['publishedAt'].substring(0,10)}  ${article['publishedAt'].substring(11,16)}',
-
-                  style: TextStyle(
-
-                    fontSize: 16.0,
-
-                    color: Colors.grey,
-
-                  ),
-
-                ),
-
-
-
-
-
-              ],
-
+              ),
             ),
-
-          ),
-
+          ],
         ),
+      ),
+    );
 
-      ],
+Widget divider() => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Container(
+        height: 1,
+        color: Colors.grey,
+      ),
+    );
 
-    ),
+Widget articleBuilder(
+  List<dynamic> list, {
+  bool isSearch = false,
+}) =>
+    ConditionalBuilder(
+      condition: list.isNotEmpty,
+      builder: (context) => ListView.separated(
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (context, index) => buildArticleItem(list[index], context),
+        separatorBuilder: (context, index) => divider(),
+        itemCount: list.length,
+      ),
+      fallback: (context) =>
+          Center(child: isSearch ? Container() : CircularProgressIndicator()),
+    );
 
-  ),
-);
-Widget divider()=>Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-  child: Container(
-    height: 1,
-    color: Colors.grey,
-  ),
-);
-Widget articleBuilder(List<dynamic> list,{bool isSearch =false,})=>ConditionalBuilder(
-  condition: list.isNotEmpty,
-  builder:(context)=> ListView.separated(
-    physics: BouncingScrollPhysics(),
-    itemBuilder:(context,index)=>buildArticleItem(list[index],context),
-    separatorBuilder:(context,index)=>divider(),
-    itemCount:list.length ,
-  ),
-  fallback:(context)=> Center(child:isSearch?Container():CircularProgressIndicator()),
-);
-void navigateTo(context,Widget)=>Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context)=>Widget
-    ),
-);
+void navigateTo(context, Widget) => Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Widget),
+    );
