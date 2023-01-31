@@ -21,18 +21,18 @@ class NewsLayout extends StatelessWidget {
           appBar: AppBar(
             title: Row(
               children: [
-                AnimatedTextKit(
-                  animatedTexts: [
-                    WavyAnimatedText( 'News in',),
-                  ],
-                  isRepeatingAnimation: true,
-                  repeatForever: true,
+                DefaultTextStyle(
+                  style:Theme.of(context).textTheme.titleMedium!,
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText( 'News in',),
+                    ],
+                    isRepeatingAnimation: true,
+                    repeatForever: true,
+                  ),
                 ),
                 SizedBox(width: 5.0,),
-                Text(cubit.title[cubit.currentIndex],
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                ),),
+                Text(cubit.title[cubit.currentIndex],),
               ],
             ),
             actions: [
@@ -51,9 +51,7 @@ class NewsLayout extends StatelessWidget {
                 ),
                 onPressed: () {
                   NewsCubit.get(context).changeMode();
-
                 },
-
               ),
               PopupMenuButton(
                 icon: Text(country.toUpperCase(),
@@ -61,7 +59,6 @@ class NewsLayout extends StatelessWidget {
                   color: Theme.of(context).textTheme.labelMedium?.color,
                 ),),
                 color:Theme.of(context).scaffoldBackgroundColor,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
                 itemBuilder: (context)=>[
                   PopupMenuItem(
                     child: TextButton(

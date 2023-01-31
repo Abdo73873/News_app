@@ -11,6 +11,7 @@ import 'package:news_app/layout/news_app/news_layout.dart';
 import 'package:news_app/shared/bloc_observer.dart';
 import 'package:news_app/shared/network/local/cache_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
+import 'package:news_app/shared/styles/theme.dart';
 
 
 void main() async {
@@ -39,91 +40,8 @@ class MyApp extends StatelessWidget
 
           return  MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch:Colors.deepOrange ,
-              scaffoldBackgroundColor: Colors.white,
-              appBarTheme: AppBarTheme(
-                titleSpacing: 20.0,
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: Colors.white,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
-                backgroundColor: Colors.white,
-                elevation: 0.0,
-                titleTextStyle: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                ),
-                iconTheme: IconThemeData(
-                  color: Colors.black,
-                ),
-              ),
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                type: BottomNavigationBarType.fixed,
-                elevation: 20.0,
-                selectedItemColor: Colors.deepOrange,
-                unselectedItemColor: Colors.grey,
-                backgroundColor: Colors.white,
-              ),
-              textTheme: TextTheme(
-                bodyText1: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-                labelMedium: TextStyle(
-                  color: Colors.black,
-                  fontSize: 13.0,
-                ),
-
-              ),
-                iconTheme: IconThemeData(
-                  color: Colors.black,
-                ),
-
-            ),
-            darkTheme: ThemeData(
-              primarySwatch: Colors.deepOrange,
-              scaffoldBackgroundColor: HexColor('333739'),
-              appBarTheme: AppBarTheme(
-                titleSpacing: 20.0,
-                color: HexColor('333739'),
-                titleTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-                iconTheme: IconThemeData(
-                  color: Colors.white,
-                ),
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: HexColor('333739'),
-                  statusBarIconBrightness: Brightness.light,
-                ),
-              ),
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                type: BottomNavigationBarType.fixed,
-                backgroundColor: HexColor('333739'),
-                selectedItemColor: Colors.deepOrange,
-                unselectedItemColor: Colors.grey,
-                elevation: 20.0,
-              ),
-              textTheme: TextTheme(
-                bodyText1: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                ),
-                labelMedium: TextStyle(
-                  color: Colors.white,
-                  fontSize: 13.0,
-                ),
-              ),
-              iconTheme: IconThemeData(
-                color: Colors.white,
-              ),
-            ),
+            theme: lightMode,
+            darkTheme: darkMode,
             themeMode:(NewsCubit.get(context).isDark)?ThemeMode.dark:ThemeMode.light,
             home: NewsLayout(),
           );

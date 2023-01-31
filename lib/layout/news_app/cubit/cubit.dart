@@ -117,10 +117,10 @@ void getSearch(String value){
 }
 
   bool isDark=false;
+
   void changeMode({
    bool? fromCache,
 })  {
-    WidgetsFlutterBinding.ensureInitialized();
     if(fromCache!=null){
       isDark=fromCache;
       emit(NewsChangeModeState());
@@ -129,9 +129,9 @@ void getSearch(String value){
       isDark=!isDark;
       CacheHelper.setBoolData(key:'isDark', value: isDark).then((value){
         emit(NewsChangeModeState());
-          Future.delayed(Duration(milliseconds:300,),(){
-      emit(Refresh());
-      },);
+        Future.delayed(Duration(milliseconds:300,),(){
+          emit(Refresh());
+        },);
       });
     }
 
