@@ -56,7 +56,10 @@ class NewsLayout extends StatelessWidget {
 
               ),
               PopupMenuButton(
-                icon: Text(country.toUpperCase()),
+                icon: Text(country.toUpperCase(),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.labelMedium?.color,
+                ),),
                 color:Theme.of(context).scaffoldBackgroundColor,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 itemBuilder: (context)=>[
