@@ -129,9 +129,6 @@ void getSearch(String value){
       isDark=!isDark;
       CacheHelper.setBoolData(key:'isDark', value: isDark).then((value){
         emit(NewsChangeModeState());
-        Future.delayed(Duration(milliseconds:300,),(){
-          emit(Refresh());
-        },);
       });
     }
 

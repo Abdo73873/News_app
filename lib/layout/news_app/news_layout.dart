@@ -128,7 +128,7 @@ class NewsLayout extends StatelessWidget {
                   PopupMenuItem(
                     child: TextButton(
                       onPressed: (){
-                        country='fr';
+                        country='de';
                         Navigator.of(context).pop();
                         cubit.changeCountry(country);
                       },
@@ -154,7 +154,7 @@ class NewsLayout extends StatelessWidget {
                   PopupMenuItem(
                     child: TextButton(
                       onPressed: (){
-                        country='ru';
+                        country='sa';
                         Navigator.of(context).pop();
                         cubit.changeCountry(country);
                       },
@@ -172,6 +172,19 @@ class NewsLayout extends StatelessWidget {
                         cubit.changeCountry(country);
                       },
                       child: Text('Sweden',
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.labelMedium?.color,
+                      ),
+                  ),
+                    ),),
+                  PopupMenuItem(
+                    child: TextButton(
+                      onPressed: (){
+                        country='ze';
+                        Navigator.of(context).pop();
+                        cubit.changeCountry(country);
+                      },
+                      child: Text('South Africa',
                       style: TextStyle(
                         color: Theme.of(context).textTheme.labelMedium?.color,
                       ),

@@ -2,7 +2,9 @@
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/layout/news_app/cubit/cubit.dart';
+import 'package:news_app/layout/news_app/cubit/states.dart';
 import '../../modules/web_view/web_view_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -51,7 +53,27 @@ Widget defaultFromField({
       textDirection: TextDirection.ltr,
     );
 
-Widget buildArticleItem(article, context) => InkWell(
+
+Widget articleBuilder(
+    List<dynamic> list, {
+      bool isSearch = false,
+    }) => ConditionalBuilder(
+    condition: list.isNotEmpty,
+    builder: (context) => ListView.separated(
+      physics: BouncingScrollPhysics(),
+      itemBuilder: (context, index) => buildArticleItem(list[index], context),
+      separatorBuilder: (context, index) => divider(),
+      itemCount: list.length,
+    ),
+    fallback: (context) =>
+        Center(child: isSearch ? Container() : CircularProgressIndicator()),
+    );
+
+
+Widget buildArticleItem(article, context) =>
+    BlocConsumer<NewsCubit,NewsStates>(
+        listener: (context,state){},
+        builder: (context,state)=> InkWell(
 
       onTap: () {
         navigateTo(context, WebViewScreen(article['url']));
@@ -60,7 +82,7 @@ Widget buildArticleItem(article, context) => InkWell(
         padding: const EdgeInsets.all(20.0),
         child: Row(
           children: [
-            Container(
+            SizedBox(
                 width: 120.0,
                 height: 100.0,
                 child: article['urlToImage'] != null
@@ -112,6 +134,7 @@ Widget buildArticleItem(article, context) => InkWell(
           ],
         ),
       ),
+    ),
     );
 
 Widget divider() => Padding(
@@ -120,22 +143,6 @@ Widget divider() => Padding(
         height: 1,
         color: Colors.grey,
       ),
-    );
-
-Widget articleBuilder(
-  List<dynamic> list, {
-  bool isSearch = false,
-}) =>
-    ConditionalBuilder(
-      condition: list.isNotEmpty,
-      builder: (context) => ListView.separated(
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (context, index) => buildArticleItem(list[index], context),
-        separatorBuilder: (context, index) => divider(),
-        itemCount: list.length,
-      ),
-      fallback: (context) =>
-          Center(child: isSearch ? Container() : CircularProgressIndicator()),
     );
 
 void navigateTo(context, Widget) => Navigator.push(
