@@ -11,10 +11,12 @@ class ScienceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewsCubit.get(context).itemSelected=0;
+
     return BlocConsumer<NewsCubit, NewsStates>(
       listener: (context, state) => NewsCubit(),
       builder: (context, state) {
-        List<dynamic> list = NewsCubit.get(context).science;
+        List<dynamic> list = NewsCubit.get(context).lists[2];
         return articleBuilder(list);
       },
     );

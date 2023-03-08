@@ -1,5 +1,9 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_constructors_in_immutables
 
+import 'dart:io';
+
+import 'package:desktop_window/desktop_window.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -12,15 +16,31 @@ import 'package:news_app/shared/bloc_observer.dart';
 import 'package:news_app/shared/network/local/cache_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
 import 'package:news_app/shared/styles/theme.dart';
-
+import 'package:responsive_builder/responsive_builder.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   //بيتاكد ان كل حاجه هنا في المبثود خلصت بعدين بيرن الابلكيشن
    WidgetsFlutterBinding.ensureInitialized();
+   ResponsiveSizingConfig.instance.setCustomBreakpoints(
+     ScreenBreakpoints(desktop: 800, tablet: 550, watch: 200),
+   );
   Bloc.observer = MyBlocObserver();
  DioHelper.init();
   await CacheHelper.init();
+
+  if(Platform.isWindows) {
+    await DesktopWindow.setMinWindowSize(
+        Size(450, 650),
+    );
+  }
+
+
    bool? isDark= CacheHelper.getBoolData(key: 'isDark',);
+
+
 
   runApp(MyApp(isDark));
 }
@@ -43,7 +63,22 @@ class MyApp extends StatelessWidget
             theme: lightMode,
             darkTheme: darkMode,
             themeMode:(NewsCubit.get(context).isDark)?ThemeMode.dark:ThemeMode.light,
-            home: NewsLayout(),
+           /* builder: (context, child) => ResponsiveWrapper
+                .builder(
+                child,
+                maxWidth: 1200,
+                minWidth: 480,
+                defaultScale: true,
+                breakpoints: [
+                  ResponsiveBreakpoint.resize(480, name: MOBILE),
+                  ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                  ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+                ],
+                background: Container(color: Color(0xFFF5F5F5))),
+            initialRoute: "/",
+*/
+            home:NewsLayout(),
+
           );
         },
       ),

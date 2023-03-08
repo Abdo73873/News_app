@@ -39,6 +39,13 @@ List<String> title=[
   'Science',
 
 ];
+
+List<List<dynamic>> lists=[
+  [],
+  [],
+  [],
+];
+
 void changeBottomNavigationBar(int index){
 currentIndex=index;
 emit(NewsBottomNavState());
@@ -46,7 +53,6 @@ emit(NewsBottomNavState());
 String apiKey='498af28f8af946e6b204c6c806e8cfcb';
 String country='eg';
 
-  List<dynamic> business=[];
 void getBusiness(){
   emit(NewsGetBusinessLoadingState());
   DioHelper.getData(
@@ -57,7 +63,7 @@ void getBusiness(){
       'apiKey':apiKey,
     },
   ).then((value) {
-    business=value.data["articles"];
+    lists[0]=value.data["articles"];
     emit(NewsGetBusinessSuccessState());
   }).catchError((er){
     emit(NewsGetBusinessErrorState(er.toString()));
@@ -66,7 +72,6 @@ void getBusiness(){
 
 
 }
- List<dynamic> sports=[];
 void getSports(){
   emit(NewsGetSportsLoadingState());
   DioHelper.getData(
@@ -77,13 +82,13 @@ void getSports(){
         'apiKey':apiKey,
       },
   ).then((value){
-    sports=value.data["articles"];
+    lists[1]=value.data["articles"];
+
     emit(NewsGetSportsSuccessState());
   }).catchError((error){
     emit(NewsGetSportsErrorState(error));
   });
 }
-List<dynamic> science=[];
 void getScience(){
   emit(NewsGetScienceLoadingState());
   DioHelper.getData(
@@ -94,7 +99,7 @@ void getScience(){
       'apiKey':apiKey,
     },
   ).then((value){
-    science=value.data["articles"];
+    lists[2]=value.data["articles"];
     emit(NewsGetScienceSuccessState());
   }).catchError((error){
     emit(NewsGetScienceErrorState(error));
@@ -160,5 +165,15 @@ void getSearch(String value){
 
     }
   }}
+  bool isDesktop=false;
+  void changePlatform(bool deskTop){
+    isDesktop=deskTop;
+   // emit(NewsChangePlatformState());
+  }
+  int itemSelected=0;
+  void changeSelected(int index){
+    itemSelected=index;
+    emit(NewsChangeSelectedItemState());
+  }
 
 }

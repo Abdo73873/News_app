@@ -11,10 +11,12 @@ class SportsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewsCubit.get(context).itemSelected=0;
+
     return BlocConsumer<NewsCubit,NewsStates>(
       listener:(context,state)=>NewsCubit(),
       builder: (context,state){
-         var list =NewsCubit.get(context).sports;
+         var list =NewsCubit.get(context).lists[1];
          return  articleBuilder(list);
       },
     );

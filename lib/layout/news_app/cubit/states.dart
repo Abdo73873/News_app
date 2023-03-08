@@ -31,3 +31,6 @@ class NewsGetSearchErrorState extends NewsStates{
 
 }
 class Refresh extends NewsStates{}
+
+class NewsChangePlatformState extends NewsStates{}
+class NewsChangeSelectedItemState extends NewsStates{}
