@@ -17,9 +17,6 @@ import 'package:news_app/shared/network/local/cache_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
 import 'package:news_app/shared/styles/theme.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter/services.dart';
 
 void main() async {
   //بيتاكد ان كل حاجه هنا في المبثود خلصت بعدين بيرن الابلكيشن
