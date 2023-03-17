@@ -50,8 +50,6 @@ dependencies:
   responsive_builder: ^0.6.3
   responsive_framework: ^0.2.0
   desktop_webview_window: ^0.2.0
-  #flutter_webview_plugin: ^0.4.0
-  url_launcher: ^6.1.10
   webview_windows: ^0.2.2
 
 dev_dependencies:

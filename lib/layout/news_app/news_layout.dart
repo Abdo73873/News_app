@@ -12,7 +12,6 @@ import 'package:news_app/modules/web_view/desktop.dart';
 import 'package:news_app/modules/web_view/web_view_screen.dart';
 import 'package:news_app/shared/components/components.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 

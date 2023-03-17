@@ -5,7 +5,6 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_window
   desktop_window
-  url_launcher_windows
   webview_windows
 )
 
