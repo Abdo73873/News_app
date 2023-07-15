@@ -1,3 +1,4 @@
+![newsapp](https://github.com/Abdo73873/News_app/assets/88721486/2e2ba877-3591-411b-a392-69ca0790b254)
 # news_app
 
 A new Flutter project.
